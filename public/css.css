@@ -193,8 +193,8 @@ body {
 .station-container td {
   text-align: center;
   cursor: pointer;
-  background-color: darkgray;
-  height: 28px;
+  /*background-color: darkgray;*/
+  height: 26px;
 }
 
 table, td, th {

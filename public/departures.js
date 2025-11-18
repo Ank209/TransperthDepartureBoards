@@ -20,10 +20,15 @@ const getStation = (stationName) => {
 }
 
 const loadStation = (data) => {
+  let timeToNextUpdate = 10; //Math.max(Math.min(nextUpdate, 10), 4);
+  console.log(`Next update in ${timeToNextUpdate} seconds.`)
+  mainTimeoutId = setTimeout(() => {
+    loadStation(data)
+  }, timeToNextUpdate * 1000)
+  
   console.log(data);
   const platforms = [];
   platformsUpdating = [];
-  let nextUpdate = 86400;
   currentTimouts.forEach(timoutId => {
     clearTimeout(timoutId);
   });
@@ -40,8 +45,6 @@ const loadStation = (data) => {
     const timeToDeparture = train.actualDeparture.diff(DateTime.now(), 'seconds').toObject().seconds;
     if (timeToDeparture < 0) {
       train.platform = 0;
-    } else if (timeToDeparture < nextUpdate) {
-      nextUpdate = timeToDeparture;
     }
     if (typeof train.stops == 'string') {
       train.stops = train.stops.split(',')
@@ -56,12 +59,6 @@ const loadStation = (data) => {
     createBoard(currentTrains);
   });
   window.scrollTo(0, 0);
-
-  timeToNextUpdate = 10; //Math.max(Math.min(nextUpdate, 10), 4);
-  console.log(`Next update in ${timeToNextUpdate} seconds.`)
-  mainTimeoutId = setTimeout(() => {
-    loadStation(data)
-  }, timeToNextUpdate * 1000)
 }
 
 const updateStops = (id, stops, first) => {
