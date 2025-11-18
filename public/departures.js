@@ -14,7 +14,7 @@ socket.on('departuresUpdate', (data) => {
 const getStation = (stationName) => {
   clearTimeout(mainTimeoutId);
   console.log(`Reloading all data for ${stationName}`)
-  fetch(`http://localhost:3000/station/${stationName}`)
+  fetch(`/station/${stationName}`)
   //Reload data every 30 mins
   setTimeout(() => { getStation('Perth Stn') }, 30 * 60 * 1000)
 }
