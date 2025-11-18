@@ -1,31 +1,25 @@
 const express = require('express');
 const http = require('http');
-const { Server } = require('socket.io');
 const xml2js = require('xml2js');
 
 // Setup Express server
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
 
 app.use(express.static('public')); // serve frontend files
 
 app.get('/station/:stationName', async (req, res) => {
   const stationName = req.params.stationName;
   console.log(`Retrieving ${stationName}`);
-  res.json({ status: `Retrieving ${stationName}` });
   const response = await fetch(`http://livetimes.transperth.wa.gov.au/LiveTimes.asmx/GetSercoTimesForStation?stationname=${stationName}`);
   const data = await response.text();
   console.log(`${stationName} Retrieved`);
-  //console.log(data);
 
   xml2js.parseString(data, (err, result) => {
     if (err) console.error(err);
-    //console.log(JSON.stringify(result))
     const jsonData = formatStationData(result);
-    //console.log(formatStationData(result));
     console.log('Parsed data to JSON');
-    io.emit("departuresUpdate", jsonData);
+    res.json(jsonData);
   });
 });
 

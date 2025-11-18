@@ -1,4 +1,3 @@
-const socket = io();
 const DateTime = luxon.DateTime;
 
 const stopUpdateFrequency = 5; //Seconds
@@ -7,14 +6,11 @@ let platformsUpdating = [];
 let currentTimouts = [];
 let mainTimeoutId;
 
-socket.on('departuresUpdate', (data) => {
-  loadStation(data);
-});
-
-const getStation = (stationName) => {
+const getStation = async (stationName) => {
   clearTimeout(mainTimeoutId);
   console.log(`Reloading all data for ${stationName}`)
-  fetch(`/station/${stationName}`)
+  const response = await fetch(`/station/${stationName}`)
+  loadStation(await response.json());
   //Reload data every 30 mins
   setTimeout(() => { getStation('Perth Stn') }, 30 * 60 * 1000)
   window.scrollTo(0, 0);
@@ -67,7 +63,6 @@ const loadStation = (data) => {
 const updateStops = (id, stops, first) => {
   if (platformsUpdating.indexOf(id) != -1) {
     const stopElement = document.getElementById(id);
-    //console.log(`Updating ${id}`);
     if (stopElement) {
       if (first) {
         stopElement.innerText = stops.slice(0, stopsPerPage - 1).join();
@@ -218,7 +213,6 @@ const createBoard = (trains) => {
 }
 
 const getLineColour = (lineName) => {
-  //console.log('Line name', lineName)
   switch (lineName) {
     // Trains
     case 'Yanchep Line':
