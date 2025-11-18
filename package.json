@@ -11,9 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0",
-    "luxon": "^3.7.2",
-    "socket.io": "^4.8.1",
-    "tmi.js": "^1.8.5",
     "xml2js": "^0.6.2"
   }
 }
