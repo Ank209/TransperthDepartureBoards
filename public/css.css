@@ -6,7 +6,14 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  min-width: 1260px;
   /*min-height: 650px;*/
+}
+
+@media (max-width: 1260px) {
+  .departure-board-container {
+    min-width: 630px;
+  }
 }
 
 .platform-board {
@@ -210,12 +217,25 @@ body {
 .station-container {
   display: flex;
   font-family: Helvetica, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  min-width: 1260px;
+}
+
+.station-container div {
+  flex-basis: 200px;
 }
 
 .station-container table {
   background-color: white;
-  width: 200px;
+  /*width: 200px;*/
+  width: 100%;
   margin: 5px;
+}
+
+@media (max-width: 1260px) {
+  .station-container {
+    min-width: 630px;
+    flex-wrap: wrap;
+  }
 }
 
 .station-container th {
