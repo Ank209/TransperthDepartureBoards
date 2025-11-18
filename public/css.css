@@ -73,6 +73,12 @@ body {
   min-width: 6%;
 }
 
+.train-series {
+  position: absolute;
+  font-size: 16px !important;
+  transform: translate(425px, 45px);
+}
+
 .divider {
   border: none;
   height: 1px;

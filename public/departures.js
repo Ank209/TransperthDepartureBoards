@@ -123,6 +123,10 @@ const createBoard = (trains) => {
   const destinationSpan4 = document.createElement('span');
   destinationSpan4.innerText = trains[0].cars;
   destination.appendChild(destinationSpan4);
+  const destinationSpan5 = document.createElement('span');
+  destinationSpan5.innerText = `${trains[0].series}-Series`;
+  destinationSpan5.classList.add('train-series');
+  destination.appendChild(destinationSpan5);
   board.appendChild(destination);
 
   const divider1 = document.createElement('hr');
