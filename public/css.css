@@ -175,9 +175,35 @@ body {
   }
 }
 
+.flashing-text {
+  animation: color-flash 1s infinite alternate; /* 1s duration, infinite loop, alternates direction */
+}
+
+@keyframes color-flash {
+  0%, 50% {
+    color: white; /* Starting color */
+  }
+  50.1%, 100% {
+    color: salmon; /* Ending color */
+  }
+}
+
+
+
+.description {
+  margin-left: 5px;
+  color: white;
+  font-family: Helvetica, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#station-name {
+  font-size: 26px;
+  color: lime;
+}
 
 .station-container {
   display: flex;
+  font-family: Helvetica, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .station-container table {

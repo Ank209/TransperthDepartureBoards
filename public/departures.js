@@ -58,6 +58,9 @@ const loadStation = (data) => {
     const currentTrains = data.trains.filter(train => train.platform === platform)
     createBoard(currentTrains);
   });
+  const stationNameElement = document.getElementById('station-name');
+  stationNameElement.innerText = data.stationName;
+  stationNameElement.style.color = getLineColour(data.trains[0].lineFull)
   window.scrollTo(0, 0);
 }
 
@@ -110,8 +113,12 @@ const createBoard = (trains) => {
   destinationSpan1.innerText = trains[0].destination;
   destination.appendChild(destinationSpan1);
   const destinationSpan2 = document.createElement('span');
-  const remaining = trains[0].actualDeparture.diff(DateTime.now(), 'minutes');
-  destinationSpan2.innerText = Math.max(Math.ceil(remaining.toObject().minutes), 1);
+  const timeDiff = trains[0].actualDeparture.diff(DateTime.now(), 'minutes');
+  const remainingMinutes = Math.max(Math.ceil(timeDiff.toObject().minutes), 1)
+  destinationSpan2.innerText = remainingMinutes;
+  if (remainingMinutes == 1) {
+    destinationSpan2.classList.add('flashing-text');
+  }
   destination.appendChild(destinationSpan2);
   const destinationSpan3 = document.createElement('span');
   destinationSpan3.innerText = trains[0].pattern;
