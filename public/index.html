@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<header>
+  <link rel="stylesheet" href="css.css" />
+  <script src="/luxon.min.js"></script>
+</header>
+
+<body>
+  <div id="main-board-container" class="departure-board-container"></div>
+  <!--<div class="platform-board">
+      <div class="board-header">
+        <span>Platform 2</span>
+        <span>Mins</span>
+        <span>Pattern</span>
+        <span>Cars</span>
+      </div>
+      <div class="board-destination">
+        <span>Rockingham</span>
+        <span>00</span>
+        <span>XX</span>
+        <span>0</span>
+      </div>
+      <hr class="divider">
+      <div class="board-stops">
+        <span>Stops at:</span>
+        <span>Stops</span>
+      </div>
+      <hr class="divider">
+      <div class="board-then-header">
+        <span>Then:</span>
+        <span>Mins</span>
+        <span>Pattern</span>
+        <span>Cars</span>
+      </div>
+      <div class="board-then">
+        <span>Mandurah</span>
+        <span>00</span>
+        <span>XX</span>
+        <span>0</span>
+      </div>
+      <hr class="divider">
+      <div class="board-extras">
+        <span></span>
+        <span>00:00 pm</span>
+      </div>
+    </div>-->
+  <div class="station-container">
+    <div>
+      <table>
+        <tr class="frehead"><th>Fremantle Line</th></tr>
+        <tr class="fre" onclick="getStation('Perth Stn')"><td>Perth</td></tr>
+        <tr class="fre" onclick="getStation('City West Stn')"><td>City West</td></tr>
+        <tr class="fre" onclick="getStation('West Leederville Stn')"><td>West Leederville</td></tr>
+        <tr class="fre" onclick="getStation('Subiaco Stn')"><td>Subiaco</td></tr>
+        <tr class="fre" onclick="getStation('Daglish Stn')"><td>Daglish</td></tr>
+        <tr class="fre" onclick="getStation('Shenton Park Stn')"><td>Shenton Park</td></tr>
+        <tr class="fre" onclick="getStation('Karrakatta Stn')"><td>Karrakatta</td></tr>
+        <tr class="fre" onclick="getStation('Loch Street Stn')"><td>Loch Street</td></tr>
+        <tr class="fre" onclick="getStation('Claremont Stn')"><td>Claremont</td></tr>
+        <tr class="fre" onclick="getStation('Swanbourne Stn')"><td>Swanbourne</td></tr>
+        <tr class="fre" onclick="getStation('Grant Street Stn')"><td>Grant Street</td></tr>
+        <tr class="fre" onclick="getStation('Cottesloe Stn')"><td>Cottesloe</td></tr>
+        <tr class="fre" onclick="getStation('Mosman Park Stn')"><td>Mosman Park</td></tr>
+        <tr class="fre" onclick="getStation('Victoria Street Stn')"><td>Victoria Street</td></tr>
+        <tr class="fre" onclick="getStation('North Fremantle Stn')"><td>North Fremantle</td></tr>
+        <tr class="fre" onclick="getStation('Fremantle Stn')"><td>Fremantle</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr class="midhead"><th>Midland Line</th></tr>
+        <tr class="mid" onclick="getStation('Perth Stn')"><td>Perth</td></tr>
+        <tr class="mid" onclick="getStation('McIver Stn')"><td>McIver</td></tr>
+        <tr class="mid" onclick="getStation('Claisebrook Stn')"><td>Claisebrook</td></tr>
+        <tr class="mid" onclick="getStation('East Perth Stn')"><td>East Perth</td></tr>
+        <tr class="mid" onclick="getStation('Mt Lawley Stn')"><td>Mt Lawley</td></tr>
+        <tr class="mid" onclick="getStation('Maylands Stn')"><td>Maylands</td></tr>
+        <tr class="mid" onclick="getStation('Meltham Stn')"><td>Meltham</td></tr>
+        <tr class="mid" onclick="getStation('Bayswater Stn')"><td>Bayswater</td></tr>
+        <tr class="mid" onclick="getStation('Ashfield Stn')"><td>Ashfield</td></tr>
+        <tr class="mid" onclick="getStation('Bassendean Stn')"><td>Bassendean</td></tr>
+        <tr class="mid" onclick="getStation('Success Hill Stn')"><td>Success Hill</td></tr>
+        <tr class="mid" onclick="getStation('Guildford Stn')"><td>Guildford</td></tr>
+        <tr class="mid" onclick="getStation('East Guildford Stn')"><td>East Guildford</td></tr>
+        <tr class="mid" onclick="getStation('Woodbridge Stn')"><td>Woodbridge</td></tr>
+        <tr class="mid" onclick="getStation('Midland Stn')"><td>Midland</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr class="armhead"><th>Armadale Line</th></tr>
+        <tr class="arm" onclick="getStation('Perth Stn')"><td>Perth</td></tr>
+        <tr class="arm" onclick="getStation('McIver Stn')"><td>McIver</td></tr>
+        <tr class="arm" onclick="getStation('Claisebrook Stn')"><td>Claisebrook</td></tr>
+        <tr class="arm" onclick="getStation('Perth Stadium Stn')"><td>Perth Stadium</td></tr>
+        <tr class="arm" onclick="getStation('Burswood Stn')"><td>Burswood</td></tr>
+        <tr class="arm" onclick="getStation('Victoria Park Stn')"><td>Victoria Park</td></tr>
+        <tr class="arm" onclick="getStation('Carlisle Stn')"><td>Carlisle</td></tr>
+        <tr class="arm" onclick="getStation('Oats Street Stn')"><td>Oats Street</td></tr>
+        <tr class="arm" onclick="getStation('Queens Park Stn')"><td>Queens Park</td></tr>
+        <tr class="arm" onclick="getStation('Cannington Stn')"><td>Cannington</td></tr>
+        <tr class="arm" onclick="getStation('Beckenham Stn')"><td>Beckenham</td></tr>
+        <tr class="arm" onclick="getStation('Kenwick Stn')"><td>Kenwick</td></tr>
+        <tr class="arm" onclick="getStation('Maddington Stn')"><td>Maddington</td></tr>
+        <tr class="arm" onclick="getStation('Gosnells Stn')"><td>Gosnells</td></tr>
+        <tr class="arm" onclick="getStation('Seaforth Stn')"><td>Seaforth</td></tr>
+        <tr class="arm" onclick="getStation('Kelmscott Stn')"><td>Kelmscott</td></tr>
+        <tr class="arm" onclick="getStation('Challis Stn')"><td>Challis</td></tr>
+        <tr class="arm" onclick="getStation('Sherwood Stn')"><td>Sherwood</td></tr>
+        <tr class="arm" onclick="getStation('Armadale Stn')"><td>Armadale</td></tr>
+        <tr class="arm" onclick="getStation('Byford Stn')"><td>Byford</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr class="airhead"><th>Airport Line</th></tr>
+        <tr class="air" onclick="getStation('Redcliffe Stn')"><td>Redcliffe</td></tr>
+        <tr class="air" onclick="getStation('Airport Central Stn')"><td>Airport Central</td></tr>
+        <tr class="air" onclick="getStation('High Wycombe Stn')"><td>High Wycombe</td></tr>
+      </table>
+      <table>
+        <tr class="ellhead"><th>Ellenbrook Line</th></tr>
+        <tr class="ell" onclick="getStation('Morley Stn')"><td>Morley</td></tr>
+        <tr class="ell" onclick="getStation('Noranda Stn')"><td>Noranda</td></tr>
+        <tr class="ell" onclick="getStation('Ballajura Stn')"><td>Ballajura</td></tr>
+        <tr class="ell" onclick="getStation('Whiteman Park Stn')"><td>Whiteman Park</td></tr>
+        <tr class="ell" onclick="getStation('Ellenbrook Stn')"><td>Ellenbrook</td></tr>
+      </table>
+      <table>
+        <tr class="tclhead"><th>Thornlie-Cockburn Line</th></tr>
+        <tr class="tcl" onclick="getStation('Thornlie Stn')"><td>Thornlie</td></tr>
+        <tr class="tcl" onclick="getStation('Nicholson Road Stn')"><td>Nicholson Road</td></tr>
+        <tr class="tcl" onclick="getStation('Ranford Road Stn')"><td>Ranford Road</td></tr>
+        <tr class="tcl" onclick="getStation('Cockburn Central Stn')"><td>Cockburn Central</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr class="yanhead"><th>Yanchep Line</th></tr>
+        <tr class="yan" onclick="getStation('Perth Underground Stn')"><td>Perth Underground</td></tr>
+        <tr class="yan" onclick="getStation('Leederville Stn')"><td>Leederville</td></tr>
+        <tr class="yan" onclick="getStation('Glendalough Stn')"><td>Glendalough</td></tr>
+        <tr class="yan" onclick="getStation('Stirling Stn')"><td>Stirling</td></tr>
+        <tr class="yan" onclick="getStation('Warwick Stn')"><td>Warwick</td></tr>
+        <tr class="yan" onclick="getStation('Greenwood Stn')"><td>Greenwood</td></tr>
+        <tr class="yan" onclick="getStation('Whitfords Stn')"><td>Whitfords</td></tr>
+        <tr class="yan" onclick="getStation('Edgewater Stn')"><td>Edgewater</td></tr>
+        <tr class="yan" onclick="getStation('Joondalup Stn')"><td>Joondalup</td></tr>
+        <tr class="yan" onclick="getStation('Currambine Stn')"><td>Currambine</td></tr>
+        <tr class="yan" onclick="getStation('Clarkson Stn')"><td>Clarkson</td></tr>
+        <tr class="yan" onclick="getStation('Butler Stn')"><td>Butler</td></tr>
+        <tr class="yan" onclick="getStation('Alkimos Stn')"><td>Alkimos</td></tr>
+        <tr class="yan" onclick="getStation('Eglinton Stn')"><td>Eglinton</td></tr>
+        <tr class="yan" onclick="getStation('Yanchep Stn')"><td>Yanchep</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr class="manhead"><th>Mandurah Line</th></tr>
+        <tr class="man" onclick="getStation('Perth Underground Stn')"><td>Perth Underground</td></tr>
+        <tr class="man" onclick="getStation('Elizabeth Quay Stn')"><td>Elizabeth Quay</td></tr>
+        <tr class="man" onclick="getStation('Canning Bridge Stn')"><td>Canning Bridge</td></tr>
+        <tr class="man" onclick="getStation('Bull Creek Stn')"><td>Bull Creek</td></tr>
+        <tr class="man" onclick="getStation('Murdoch Stn')"><td>Murdoch</td></tr>
+        <tr class="man" onclick="getStation('Cockburn Central Stn')"><td>Cockburn Central</td></tr>
+        <tr class="man" onclick="getStation('Aubin Grove Stn')"><td>Aubin Grove</td></tr>
+        <tr class="man" onclick="getStation('Kwinana Stn')"><td>Kwinana</td></tr>
+        <tr class="man" onclick="getStation('Wellard Stn')"><td>Wellard</td></tr>
+        <tr class="man" onclick="getStation('Rockingham Stn')"><td>Rockingham</td></tr>
+        <tr class="man" onclick="getStation('Warnbro Stn')"><td>Warnbro</td></tr>
+        <tr class="man" onclick="getStation('Lakelands Stn')"><td>Lakelands</td></tr>
+        <tr class="man" onclick="getStation('Mandurah Stn')"><td>Mandurah</td></tr>
+      </table>
+    </div>
+  </div>
+</body>
+<footer>
+  <script src='/socket.io/socket.io.js'></script>
+  <script type="text/javascript" src="departures.js"></script>
+</footer>
+
+</html>
