@@ -11,13 +11,15 @@ socket.on('departuresUpdate', (data) => {
   loadStation(data);
 });
 
-getStation = (stationName) => {
+const getStation = (stationName) => {
   clearTimeout(mainTimeoutId);
   console.log(`Reloading all data for ${stationName}`)
   fetch(`http://localhost:3000/station/${stationName}`)
+  //Reload data every 30 mins
+  setTimeout(() => { getStation('Perth Stn') }, 30 * 60 * 1000)
 }
 
-loadStation = (data) => {
+const loadStation = (data) => {
   console.log(data);
   const platforms = [];
   platformsUpdating = [];
@@ -27,8 +29,6 @@ loadStation = (data) => {
   });
   currentTimouts = [];
 
-  //Reload data every 30 mins
-  setTimeout(() => { getStation('Perth Stn') }, 30 * 60 * 1000)
   data.time = DateTime.fromISO(data.time);
   data.trains.forEach(train => {
     if (platforms.indexOf(train.platform) == -1 && train.platform != 0) {
@@ -85,7 +85,7 @@ const updateStops = (id, stops, first) => {
   }
 }
 
-createBoard = (trains) => {
+const createBoard = (trains) => {
   const board = document.createElement('div');
   board.classList.add('platform-board');
 
@@ -239,4 +239,6 @@ const getLineColour = (lineName) => {
   }
 }
 
-getStation('Perth Stn')
+window.onload = () => {
+  getStation('Perth Stn');
+}
