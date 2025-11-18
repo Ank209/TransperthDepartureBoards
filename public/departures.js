@@ -35,15 +35,15 @@ const loadStation = (data) => {
 
   data.time = DateTime.fromISO(data.time);
   data.trains.forEach(train => {
-    if (platforms.indexOf(train.platform) == -1 && train.platform != 0) {
-      platforms.push(train.platform);
-    }
     train.scheduledDeparture = DateTime.fromISO(train.scheduledDeparture);
     train.minutesDelayed = Number(train.minutesDelayed);
     train.actualDeparture = train.scheduledDeparture.plus({ minutes: train.minutesDelayed });
     const timeToDeparture = train.actualDeparture.diff(DateTime.now(), 'seconds').toObject().seconds;
     if (timeToDeparture < 0) {
       train.platform = 0;
+    }
+    if (platforms.indexOf(train.platform) == -1 && train.platform != 0) {
+      platforms.push(train.platform);
     }
     if (typeof train.stops == 'string') {
       train.stops = train.stops.split(',')
@@ -54,8 +54,10 @@ const loadStation = (data) => {
 
   document.getElementById('main-board-container').innerHTML = '';
   platforms.forEach(platform => {
-    const currentTrains = data.trains.filter(train => train.platform === platform)
-    createBoard(currentTrains);
+    const currentTrains = data.trains.filter(train => train.platform === platform);
+    if (currentTrains) {
+      createBoard(currentTrains);
+    }
   });
   const stationNameElement = document.getElementById('station-name');
   stationNameElement.innerText = data.stationName;
