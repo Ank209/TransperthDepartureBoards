@@ -17,6 +17,7 @@ const getStation = (stationName) => {
   fetch(`/station/${stationName}`)
   //Reload data every 30 mins
   setTimeout(() => { getStation('Perth Stn') }, 30 * 60 * 1000)
+  window.scrollTo(0, 0);
 }
 
 const loadStation = (data) => {
@@ -61,7 +62,6 @@ const loadStation = (data) => {
   const stationNameElement = document.getElementById('station-name');
   stationNameElement.innerText = data.stationName;
   stationNameElement.style.color = getLineColour(data.trains[0].lineFull)
-  window.scrollTo(0, 0);
 }
 
 const updateStops = (id, stops, first) => {
