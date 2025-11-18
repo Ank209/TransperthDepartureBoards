@@ -4,15 +4,17 @@ const stopUpdateFrequency = 5; //Seconds
 const stopsPerPage = 12;
 let platformsUpdating = [];
 let currentTimouts = [];
+let loadDataTimeout;
 let mainTimeoutId;
 
 const getStation = async (stationName) => {
   clearTimeout(mainTimeoutId);
+  clearTimeout(loadDataTimeout);
   console.log(`Reloading all data for ${stationName}`)
   const response = await fetch(`/station/${stationName}`)
   loadStation(await response.json());
   //Reload data every 30 mins
-  setTimeout(() => { getStation('Perth Stn') }, 30 * 60 * 1000)
+  loadDataTimeout = setTimeout(() => { getStation('Perth Stn') }, 30 * 60 * 1000)
   window.scrollTo(0, 0);
 }
 
