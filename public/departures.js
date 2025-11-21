@@ -2,6 +2,7 @@ const DateTime = luxon.DateTime;
 
 const stopUpdateFrequency = 5; //Seconds
 const stopsPerPage = 12;
+const globalUpdateFrequency = 10; // Minutes
 let loadDataTimeout;
 let mainTimeoutId;
 
@@ -12,8 +13,8 @@ const getStation = async (stationName) => {
   const response = await fetch(`/station/${stationName}`)
   loadStation(await response.json());
   //Reload data every 30 mins
-  console.log(`Data loaded at ${DateTime.now().toLocaleString(DateTime.TIME_SIMPLE)}. Next data refresh at ${DateTime.now().plus({minutes: 30}).toLocaleString(DateTime.TIME_SIMPLE)}`);
-  loadDataTimeout = setTimeout(() => { getStation('Perth Stn') }, 10 * 60 * 1000);
+  console.log(`Data loaded at ${DateTime.now().toLocaleString(DateTime.TIME_SIMPLE)}. Next data refresh at ${DateTime.now().plus({minutes: globalUpdateFrequency}).toLocaleString(DateTime.TIME_SIMPLE)}`);
+  loadDataTimeout = setTimeout(() => { getStation('Perth Stn') }, globalUpdateFrequency * 60 * 1000);
   window.scrollTo(0, 0);
 }
 
