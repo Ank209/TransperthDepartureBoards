@@ -2,8 +2,6 @@ const DateTime = luxon.DateTime;
 
 const stopUpdateFrequency = 5; //Seconds
 const stopsPerPage = 12;
-let platformsUpdating = [];
-let currentTimouts = [];
 let loadDataTimeout;
 let mainTimeoutId;
 
@@ -14,27 +12,22 @@ const getStation = async (stationName) => {
   const response = await fetch(`/station/${stationName}`)
   loadStation(await response.json());
   //Reload data every 30 mins
-  loadDataTimeout = setTimeout(() => { getStation('Perth Stn') }, 30 * 60 * 1000)
+  console.log(`Data loaded at ${DateTime.now().toLocaleString(DateTime.TIME_SIMPLE)}. Next data refresh at ${DateTime.now().plus({minutes: 30}).toLocaleString(DateTime.TIME_SIMPLE)}`);
+  loadDataTimeout = setTimeout(() => { getStation('Perth Stn') }, 30 * 60 * 1000);
   window.scrollTo(0, 0);
 }
 
-const loadStation = (data) => {
+const loadStation = (trainData) => {
   let timeToNextUpdate = 10; //Math.max(Math.min(nextUpdate, 10), 4);
-  console.log(`Next update in ${timeToNextUpdate} seconds.`)
+  //console.log(`Next update in ${timeToNextUpdate} seconds.`)
   mainTimeoutId = setTimeout(() => {
-    loadStation(data)
+    loadStation(trainData)
   }, timeToNextUpdate * 1000)
-  
-  console.log(data);
-  const platforms = [];
-  platformsUpdating = [];
-  currentTimouts.forEach(timoutId => {
-    clearTimeout(timoutId);
-  });
-  currentTimouts = [];
 
-  data.time = DateTime.fromISO(data.time);
-  data.trains.forEach(train => {
+  const platforms = [];
+
+  trainData.time = DateTime.fromISO(trainData.time);
+  trainData.trains.forEach(train => {
     train.scheduledDeparture = DateTime.fromISO(train.scheduledDeparture);
     train.minutesDelayed = Number(train.minutesDelayed);
     train.actualDeparture = train.scheduledDeparture.plus({ minutes: train.minutesDelayed });
@@ -50,36 +43,27 @@ const loadStation = (data) => {
     }
   });
   platforms.sort();
-  console.log(platforms);
+  //console.log(platforms);
 
   document.getElementById('main-board-container').innerHTML = '';
   platforms.forEach(platform => {
-    const currentTrains = data.trains.filter(train => train.platform === platform);
+    const currentTrains = trainData.trains.filter(train => train.platform === platform);
     if (currentTrains) {
       createBoard(currentTrains);
     }
   });
   const stationNameElement = document.getElementById('station-name');
-  stationNameElement.innerText = data.stationName;
-  stationNameElement.style.color = getLineColour(data.trains[0].lineFull)
+  stationNameElement.innerText = trainData.stationName;
+  stationNameElement.style.color = getLineColour(trainData.trains[0].lineFull)
 }
 
 const updateStops = (id, stops, first) => {
-  if (platformsUpdating.indexOf(id) != -1) {
-    const stopElement = document.getElementById(id);
-    if (stopElement) {
-      if (first) {
-        stopElement.innerText = stops.slice(0, stopsPerPage - 1).join();
-      } else {
-        stopElement.innerText = stops.slice(stopsPerPage - 1).join();
-      }
-    }
-    if (stops.length > stopsPerPage) {
-      currentTimouts.push(setTimeout(() => {
-        updateStops(id, stops, !first)
-      }, stopUpdateFrequency * 1000));
+  const stopElement = document.getElementById(id);
+  if (stopElement) {
+    if (first) {
+      stopElement.innerText = stops.slice(0, stopsPerPage - 1).join();
     } else {
-      platformsUpdating.splice(platformsUpdating.indexOf(id), 1);
+      stopElement.innerText = stops.slice(stopsPerPage - 1).join();
     }
   }
 }
@@ -144,12 +128,7 @@ const createBoard = (trains) => {
   stopsSpan2.id = `platform-${trains[0].platform}-stops`
   if (trains[0].stops.length > stopsPerPage) {
     stopsSpan2.innerText = trains[0].stops.slice(0, stopsPerPage - 1).join();
-    if (platformsUpdating.indexOf(stopsSpan2.id) == -1) {
-      platformsUpdating.push(stopsSpan2.id);
-      currentTimouts.push(setTimeout(() => {
-        updateStops(stopsSpan2.id, trains[0].stops, false);
-      }, stopUpdateFrequency * 1000));
-    }
+    setTimeout(() => { updateStops(stopsSpan2.id, trains[0].stops, false) }, stopUpdateFrequency * 1000);
   } else {
     stopsSpan2.innerText = trains[0].stops.join();
   }
