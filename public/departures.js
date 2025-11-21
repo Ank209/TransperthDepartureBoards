@@ -13,7 +13,7 @@ const getStation = async (stationName) => {
   loadStation(await response.json());
   //Reload data every 30 mins
   console.log(`Data loaded at ${DateTime.now().toLocaleString(DateTime.TIME_SIMPLE)}. Next data refresh at ${DateTime.now().plus({minutes: 30}).toLocaleString(DateTime.TIME_SIMPLE)}`);
-  loadDataTimeout = setTimeout(() => { getStation('Perth Stn') }, 30 * 60 * 1000);
+  loadDataTimeout = setTimeout(() => { getStation('Perth Stn') }, 10 * 60 * 1000);
   window.scrollTo(0, 0);
 }
 
