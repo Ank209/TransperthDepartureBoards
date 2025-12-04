@@ -86,6 +86,12 @@ body {
   transform: translate(425px, 45px);
 }
 
+.train-next-dest {
+  position: absolute;
+  font-size: 16px !important;
+  transform: translate(12px, 44px);
+}
+
 .divider {
   border: none;
   height: 1px;

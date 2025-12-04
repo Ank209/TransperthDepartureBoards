@@ -31,9 +31,9 @@ const loadStation = (trainData) => {
   trainData.trains.forEach(train => {
     train.scheduledDeparture = DateTime.fromISO(train.scheduledDeparture);
     train.minutesDelayed = Number(train.minutesDelayed);
-    train.actualDeparture = train.scheduledDeparture.plus({ minutes: train.minutesDelayed });
+    train.actualDeparture = train.scheduledDeparture.plus({ seconds: train.delay });
     const timeToDeparture = train.actualDeparture.diff(DateTime.now(), 'seconds').toObject().seconds;
-    if (timeToDeparture < 0) {
+    if (timeToDeparture < 0 || train.cancelled) {
       train.platform = 0;
     }
     if (platforms.indexOf(train.platform) == -1 && train.platform != 0) {
@@ -42,6 +42,11 @@ const loadStation = (trainData) => {
     if (typeof train.stops == 'string') {
       train.stops = train.stops.split(',')
     }
+    /*const nextTrain = trainData.trains.find(bTrain => bTrain.runId == train.nextId);
+    if (nextTrain) {
+      train.nextDestination = nextTrain.destination;
+      //console.log(train.nextDestination)
+    }*/
   });
   platforms.sort();
   //console.log(platforms);
@@ -110,10 +115,18 @@ const createBoard = (trains) => {
   const destinationSpan4 = document.createElement('span');
   destinationSpan4.innerText = trains[0].cars;
   destination.appendChild(destinationSpan4);
-  const destinationSpan5 = document.createElement('span');
-  destinationSpan5.innerText = `${trains[0].series}-Series`;
-  destinationSpan5.classList.add('train-series');
-  destination.appendChild(destinationSpan5);
+  if (trains[0].series) {
+    const destinationSpan5 = document.createElement('span');
+    destinationSpan5.innerText = `${trains[0].series}-Series`;
+    destinationSpan5.classList.add('train-series');
+    destination.appendChild(destinationSpan5);
+  }
+  if (trains[0].nextDestination) {
+    const destinationSpan6 = document.createElement('span');
+    destinationSpan6.innerText = `then to ${trains[0].nextDestination}`;
+    destinationSpan6.classList.add('train-next-dest');
+    destination.appendChild(destinationSpan6);
+  }
   board.appendChild(destination);
 
   const divider1 = document.createElement('hr');

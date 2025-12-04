@@ -14,6 +14,7 @@ app.get('/station/:stationName', async (req, res) => {
   const response = await fetch(`http://livetimes.transperth.wa.gov.au/LiveTimes.asmx/GetSercoTimesForStation?stationname=${stationName}`);
   const data = await response.text();
   console.log(`${stationName} Retrieved`);
+  console.log(data)
 
   xml2js.parseString(data, (err, result) => {
     if (err) console.error(err);
@@ -29,17 +30,20 @@ const formatStationData = (rawJSON) => {
     const platform = train.Platform[0];
     trains.push({
       cars: train.Ncar[0],
-      series: train.Series[0],
+      series: train.Series?.[0] ?? undefined,
       platform: platform.substring(platform.length - 1),
       scheduledDeparture: train.Schedule[0], // Non-delayed departure time
       delay: train.Delay[0],
       delayText: train.DisplayDelayTime[0],
+      cancelled: train.Cancelled[0] == 'True',
       destination: train.Destination[0],
       minutesDelayed: train.MinutesDelayTime[0],
       line: train.Line[0],
       lineFull: train.LineFull[0],
       stops: train.PatternFullDisplay[0],
-      pattern: train.Patterncode[0]
+      pattern: train.Patterncode[0],
+      runId: train.Run?.[0],
+      nextId: train.Link?.[0]
     });
   });
 
