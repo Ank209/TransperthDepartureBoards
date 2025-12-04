@@ -14,7 +14,7 @@ app.get('/station/:stationName', async (req, res) => {
   const response = await fetch(`http://livetimes.transperth.wa.gov.au/LiveTimes.asmx/GetSercoTimesForStation?stationname=${stationName}`);
   const data = await response.text();
   console.log(`${stationName} Retrieved`);
-  console.log(data)
+  //console.log(data)
 
   xml2js.parseString(data, (err, result) => {
     if (err) console.error(err);
