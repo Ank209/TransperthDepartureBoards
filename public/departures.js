@@ -106,8 +106,10 @@ const createBoard = (trains) => {
   const remainingMinutes = Math.max(Math.ceil(timeDiff.toObject().minutes), 1)
   destinationSpan2.innerText = remainingMinutes;
   if (remainingMinutes == 1) {
+    destinationSpan1.classList.add('flashing-text');
     destinationSpan2.classList.add('flashing-text');
   }
+  destination.appendChild(destinationSpan1);
   destination.appendChild(destinationSpan2);
   const destinationSpan3 = document.createElement('span');
   destinationSpan3.innerText = trains[0].pattern;

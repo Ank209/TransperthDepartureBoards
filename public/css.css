@@ -195,7 +195,7 @@ body {
 }
 
 .flashing-text {
-  animation: color-flash 1s infinite alternate; /* 1s duration, infinite loop, alternates direction */
+  animation: color-flash 2s infinite alternate; /* 2s duration, infinite loop, alternates direction */
 }
 
 @keyframes color-flash {
@@ -203,7 +203,7 @@ body {
     color: white; /* Starting color */
   }
   50.1%, 100% {
-    color: salmon; /* Ending color */
+    color: orange; /* Ending color */
   }
 }
 
