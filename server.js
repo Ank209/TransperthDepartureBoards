@@ -1,14 +1,10 @@
 import express from 'express';
 import xml2js from 'xml2js';
-import AutoEncrypt from '@small-tech/auto-encrypt'
+import http from 'http';
 
 // Setup Express server
 const app = express();
-const domain = 'transperth.ankhou.net';
-const server = await AutoEncrypt.https.createServer(
-  { domains: [domain] },
-  app
-)
+const server = http.createServer(app);
 
 app.use(express.static('public')); // serve frontend files
 
