@@ -1,5 +1,5 @@
-const express = require('express');
-const xml2js = require('xml2js');
+import express from 'express';
+import xml2js from 'xml2js';
 import AutoEncrypt from '@small-tech/auto-encrypt'
 
 // Setup Express server
