@@ -2,7 +2,7 @@ const DateTime = luxon.DateTime;
 
 const stopUpdateFrequency = 5; //Seconds
 const stopsPerPage = 12;
-const globalUpdateFrequency = 10; // Minutes
+const globalUpdateFrequency = 30; // Minutes
 let loadDataTimeout;
 let mainTimeoutId;
 
