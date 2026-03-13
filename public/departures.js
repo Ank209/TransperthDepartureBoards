@@ -14,7 +14,7 @@ const getStation = async (stationName) => {
   loadStation(await response.json());
   //Reload data every 30 mins
   console.log(`Data loaded at ${DateTime.now().toLocaleString(DateTime.TIME_SIMPLE)}. Next data refresh at ${DateTime.now().plus({minutes: globalUpdateFrequency}).toLocaleString(DateTime.TIME_SIMPLE)}`);
-  loadDataTimeout = setTimeout(() => { getStation('Perth Stn') }, globalUpdateFrequency * 60 * 1000);
+  loadDataTimeout = setTimeout(() => { getStation(stationName) }, globalUpdateFrequency * 60 * 1000);
   window.scrollTo(0, 0);
 }
 
@@ -143,7 +143,7 @@ const createBoard = (trains) => {
   const stopsSpan2 = document.createElement('span');
   stopsSpan2.id = `platform-${trains[0].platform}-stops`
   if (trains[0].stops.length > stopsPerPage) {
-    stopsSpan2.innerText = trains[0].stops.slice(0, stopsPerPage - 1).join();
+    stopsSpan2.innerText = `${trains[0].stops.slice(0, stopsPerPage - 1).join()}, ...`;
     setTimeout(() => { updateStops(stopsSpan2.id, trains[0].stops, false) }, stopUpdateFrequency * 1000);
   } else {
     stopsSpan2.innerText = trains[0].stops.join();
